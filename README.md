@@ -44,3 +44,6 @@ Current fix: `UJIANKU-V1.0-A-FIX5` — Supabase URL is fixed in BuildConfig; onl
 
 
 Current fix: `UJIANKU-V1.0-A-FIX6` — GitHub Actions no longer requires `SUPABASE_URL` secret.
+
+
+Current fix: `UJIANKU-V1.0-A-FIX8` — GitHub Actions builds from `android-guru` using Gradle 8.13 without a Gradle wrapper.
