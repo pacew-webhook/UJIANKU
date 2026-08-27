@@ -21,3 +21,20 @@ Jangan masukkan database password atau `sb_secret_...` ke APK/source code.
 
 ## Baseline
 UJIANKU-V1.0-A
+
+
+## Latest fix
+V1.0-A-FIX1: compileSdk raised to 36 to satisfy AndroidX AAR metadata requirements; targetSdk remains 35.
+
+
+## Current Fix
+`UJIANKU-V1.0-A-FIX2` — perbaikan Supabase Auth pada MainActivity.
+
+
+Current fix: `UJIANKU-V1.0-A-FIX3`.
+
+
+### V1.0-A-FIX4
+- Memperbaiki konfigurasi URL/key Supabase agar tidak jatuh ke localhost saat Gradle property kosong.
+- GitHub Actions memvalidasi `SUPABASE_URL` dan `SUPABASE_PUBLISHABLE_KEY` sebelum build.
+- Tidak mengubah UI dan tidak menambahkan fitur di luar V1.0-A.
