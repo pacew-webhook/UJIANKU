@@ -38,3 +38,6 @@ Current fix: `UJIANKU-V1.0-A-FIX3`.
 - Memperbaiki konfigurasi URL/key Supabase agar tidak jatuh ke localhost saat Gradle property kosong.
 - GitHub Actions memvalidasi `SUPABASE_URL` dan `SUPABASE_PUBLISHABLE_KEY` sebelum build.
 - Tidak mengubah UI dan tidak menambahkan fitur di luar V1.0-A.
+
+
+Current fix: `UJIANKU-V1.0-A-FIX5` — Supabase URL is fixed in BuildConfig; only publishable key is required as a GitHub Secret.
