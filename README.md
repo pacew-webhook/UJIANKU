@@ -48,8 +48,22 @@ Current fix: `UJIANKU-V1.0-A-FIX6` — GitHub Actions no longer requires `SUPABA
 
 Current fix: `UJIANKU-V1.0-A-FIX8` — GitHub Actions builds from `android-guru` using Gradle 8.13 without a Gradle wrapper.
 
+## Bank Soal — V1.0-A-FIX9
 
-Current milestone: `UJIANKU-V1.0-B` — Guru Dashboard skeleton.
+Bank Soal Guru menggunakan Supabase PostgreSQL. Sebelum membuka fitur Bank Soal, jalankan file `supabase/001_questions.sql` di Supabase SQL Editor satu kali. RLS membatasi setiap guru agar hanya dapat membaca, menambah, mengubah, dan menghapus soal miliknya sendiri.
 
+Fitur saat ini:
+- Lihat daftar soal
+- Tambah soal pilihan ganda A-D
+- Edit soal
+- Hapus soal
+- Pilih jawaban benar
 
-Current fix: `UJIANKU-V1.0-B-FIX1`.
+## Bank Soal — Import Excel
+
+Halaman Bank Soal mendukung import banyak soal sekaligus dari file `.xlsx`.
+Gunakan sheet pertama dengan header:
+
+`No | Pertanyaan | Pilihan A | Pilihan B | Pilihan C | Pilihan D | Jawaban`
+
+Nilai Jawaban hanya `A`, `B`, `C`, atau `D`. Template siap pakai tersedia di `templates/Bank_Soal_Template.xlsx`.
