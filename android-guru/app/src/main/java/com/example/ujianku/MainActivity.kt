@@ -13,6 +13,7 @@ import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     private val supabase = SupabaseClient.client
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,33 +23,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLogin() {
         setContentView(R.layout.activity_main)
+
         val emailInput = findViewById<EditText>(R.id.emailInput)
         val passwordInput = findViewById<EditText>(R.id.passwordInput)
         val loginButton = findViewById<Button>(R.id.loginButton)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val errorText = findViewById<TextView>(R.id.errorText)
 
-        lifecycleScope.launch {
-            try {
-                supabase.auth.awaitInitialization()
-                if (supabase.auth.currentSessionOrNull() != null) showDashboard()
-            } catch (_: Exception) {}
-        }
-
         loginButton.setOnClickListener {
             val email = emailInput.text.toString().trim()
             val password = passwordInput.text.toString()
+
             errorText.visibility = View.GONE
 
-            if (email.isBlank()) {
-                errorText.text = "Email wajib diisi."
-                errorText.visibility = View.VISIBLE
-                return@setOnClickListener
-            }
-            if (password.isBlank()) {
-                errorText.text = "Password wajib diisi."
-                errorText.visibility = View.VISIBLE
-                return@setOnClickListener
+            when {
+                email.isBlank() -> {
+                    errorText.text = "Email wajib diisi."
+                    errorText.visibility = View.VISIBLE
+                    return@setOnClickListener
+                }
+
+                password.isBlank() -> {
+                    errorText.text = "Password wajib diisi."
+                    errorText.visibility = View.VISIBLE
+                    return@setOnClickListener
+                }
             }
 
             loginButton.isEnabled = false
@@ -62,7 +61,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     showDashboard()
                 } catch (e: Exception) {
-                    errorText.text = e.message ?: "Login gagal. Periksa email dan password."
+                    errorText.text =
+                        e.message ?: "Login gagal. Periksa email dan password."
                     errorText.visibility = View.VISIBLE
                 } finally {
                     loginButton.isEnabled = true
@@ -74,13 +74,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDashboard() {
         setContentView(R.layout.activity_dashboard)
+
         val emailText = findViewById<TextView>(R.id.userEmailText)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
-        emailText.text = "Login sebagai: ${supabase.auth.currentUserOrNull()?.email ?: "-"}"
+
+        emailText.text =
+            "Login sebagai: ${supabase.auth.currentUserOrNull()?.email ?: "-"}"
 
         logoutButton.setOnClickListener {
             lifecycleScope.launch {
-                try { supabase.auth.signOut() } finally { showLogin() }
+                try {
+                    supabase.auth.signOut()
+                } finally {
+                    showLogin()
+                }
             }
         }
     }
