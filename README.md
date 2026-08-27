@@ -47,3 +47,6 @@ Current fix: `UJIANKU-V1.0-A-FIX6` — GitHub Actions no longer requires `SUPABA
 
 
 Current fix: `UJIANKU-V1.0-A-FIX8` — GitHub Actions builds from `android-guru` using Gradle 8.13 without a Gradle wrapper.
+
+
+Current milestone: `UJIANKU-V1.0-B` — Guru Dashboard skeleton.
