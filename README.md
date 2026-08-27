@@ -50,3 +50,6 @@ Current fix: `UJIANKU-V1.0-A-FIX8` — GitHub Actions builds from `android-guru`
 
 
 Current milestone: `UJIANKU-V1.0-B` — Guru Dashboard skeleton.
+
+
+Current fix: `UJIANKU-V1.0-B-FIX1`.
