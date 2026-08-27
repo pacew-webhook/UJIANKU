@@ -6,14 +6,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.ujianku.data.SupabaseClient
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,16 +78,14 @@ class MainActivity : AppCompatActivity() {
 
         val emailText = findViewById<TextView>(R.id.userEmailText)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
+        val bankSoalButton = findViewById<Button>(R.id.bankSoalButton)
 
         emailText.text =
             "Login sebagai: ${supabase.auth.currentUserOrNull()?.email ?: "-"}"
 
-        setupDashboardMenu(R.id.menuBankSoal, "Bank Soal")
-        setupDashboardMenu(R.id.menuBuatUjian, "Buat Ujian")
-        setupDashboardMenu(R.id.menuDataSiswa, "Data Siswa")
-        setupDashboardMenu(R.id.menuNilai, "Nilai")
-        setupDashboardMenu(R.id.menuDaftarUjian, "Daftar Ujian")
-        setupDashboardMenu(R.id.menuProfil, "Profil Guru")
+        bankSoalButton.setOnClickListener {
+            startActivity(android.content.Intent(this, BankSoalActivity::class.java))
+        }
 
         logoutButton.setOnClickListener {
             lifecycleScope.launch {
@@ -101,15 +97,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun setupDashboardMenu(buttonId: Int, featureName: String) {
-        findViewById<Button>(buttonId).setOnClickListener {
-            Toast.makeText(
-                this,
-                "$featureName akan tersedia pada tahap berikutnya.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
 }
-
