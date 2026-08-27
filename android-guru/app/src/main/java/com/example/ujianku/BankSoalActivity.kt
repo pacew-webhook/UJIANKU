@@ -2,6 +2,7 @@ package com.example.ujianku
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.net.Uri
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.EditText
@@ -24,6 +25,11 @@ class BankSoalActivity : AppCompatActivity() {
     private lateinit var listContainer: LinearLayout
     private lateinit var progress: ProgressBar
     private lateinit var emptyText: TextView
+    private val excelPicker = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri?.let { importExcel(it) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +39,9 @@ class BankSoalActivity : AppCompatActivity() {
         progress = findViewById(R.id.questionProgress)
         emptyText = findViewById(R.id.emptyQuestions)
         findViewById<Button>(R.id.addQuestionButton).setOnClickListener { showQuestionDialog(null) }
+        findViewById<Button>(R.id.importExcelButton).setOnClickListener {
+            excelPicker.launch(arrayOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"))
+        }
         findViewById<Button>(R.id.backButton).setOnClickListener { finish() }
         loadQuestions()
     }
@@ -116,6 +125,63 @@ class BankSoalActivity : AppCompatActivity() {
             }
         }
         dialog.show()
+    }
+
+    private fun importExcel(uri: Uri) {
+        progress.visibility = View.VISIBLE
+        lifecycleScope.launch {
+            try {
+                val result = XlsxQuestionImporter.read(contentResolver, uri)
+                if (result.rows.isEmpty()) {
+                    showImportResult(0, result.errors)
+                    return@launch
+                }
+
+                val teacherId = supabase.auth.currentUserOrNull()?.id
+                    ?: throw IllegalStateException("Sesi login guru sudah berakhir.")
+
+                var imported = 0
+                result.rows.chunked(100).forEach { chunk ->
+                    val payload = chunk.map { row ->
+                        Question(
+                            teacherId = teacherId,
+                            question = row.question,
+                            optionA = row.optionA,
+                            optionB = row.optionB,
+                            optionC = row.optionC,
+                            optionD = row.optionD,
+                            correctAnswer = row.correctAnswer
+                        )
+                    }
+                    supabase.from("questions").insert(payload)
+                    imported += payload.size
+                }
+
+                loadQuestions()
+                showImportResult(imported, result.errors)
+            } catch (e: Exception) {
+                showError("Import Excel gagal. ${e.message ?: "Periksa format file dan koneksi."}")
+            } finally {
+                progress.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun showImportResult(imported: Int, errors: List<String>) {
+        val message = buildString {
+            append("Berhasil diimport: $imported soal.")
+            if (errors.isNotEmpty()) {
+                append("\n\nBaris yang dilewati: ${errors.size}.")
+                append("\n")
+                errors.take(8).forEach { append("\n• $it") }
+                if (errors.size > 8) append("\n\n...dan ${errors.size - 8} baris lainnya.")
+            }
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Import Excel")
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show()
     }
 
     private fun saveQuestion(existing: Question?, q: String, a: String, b: String, c: String, d: String, correct: String) {
