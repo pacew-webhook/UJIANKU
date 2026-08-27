@@ -7,16 +7,15 @@ plugins {
 android {
     namespace = "com.example.ujianku"
     compileSdk = 36
-
-    buildConfigField("String", "SUPABASE_URL", "\"https://aaupbsxavpidifmnanbj.supabase.co\"")
-    buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"${project.findProperty("SUPABASE_PUBLISHABLE_KEY") ?: ""}\"")
     defaultConfig {
+        buildConfigField("String", "SUPABASE_URL", "\"https://aaupbsxavpidifmnanbj.supabase.co\"")
+        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"${project.findProperty("SUPABASE_PUBLISHABLE_KEY") ?: ""}\"")
+
         applicationId = "com.example.ujianku"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0-A"
-        val supabaseUrl = (project.findProperty("SUPABASE_URL") as String?)
             ?.trim()
             ?.takeIf { it.isNotEmpty() }
             ?: "https://aaupbsxavpidifmnanbj.supabase.co"
