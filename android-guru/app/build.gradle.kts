@@ -14,8 +14,17 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0-A"
-        buildConfigField("String", "SUPABASE_URL", "\"${project.findProperty("SUPABASE_URL") ?: "https://YOUR_PROJECT_REF.supabase.co"}\"")
-        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"${project.findProperty("SUPABASE_PUBLISHABLE_KEY") ?: "sb_publishable_YOUR_KEY"}\"")
+        val supabaseUrl = (project.findProperty("SUPABASE_URL") as String?)
+            ?.trim()
+            ?.takeIf { it.isNotEmpty() }
+            ?: "https://aaupbsxavpidifmnanbj.supabase.co"
+        val supabasePublishableKey = (project.findProperty("SUPABASE_PUBLISHABLE_KEY") as String?)
+            ?.trim()
+            ?.takeIf { it.isNotEmpty() }
+            ?: "sb_publishable_QrLiHQFdpaN0f-D8kW-xqA_1egG73mA"
+
+        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"$supabasePublishableKey\"")
     }
 
     buildFeatures { buildConfig = true }
