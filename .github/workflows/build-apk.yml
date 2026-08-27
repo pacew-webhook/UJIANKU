@@ -18,12 +18,35 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.13"
+      - name: Validate Supabase configuration
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ]; then
+            echo "ERROR: GitHub Secret SUPABASE_URL belum diisi."
+            exit 1
+          fi
+          if [ -z "$SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "ERROR: GitHub Secret SUPABASE_PUBLISHABLE_KEY belum diisi."
+            exit 1
+          fi
+          case "$SUPABASE_URL" in
+            https://*.supabase.co) ;;
+            *)
+              echo "ERROR: SUPABASE_URL harus berupa URL Supabase https://<project-ref>.supabase.co"
+              exit 1
+              ;;
+          esac
+
       - name: Build Debug APK
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
         run: |
-          gradle :android-guru:app:assembleDebug             -PSUPABASE_URL="$SUPABASE_URL"             -PSUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
+          gradle :android-guru:app:assembleDebug \
+            -PSUPABASE_URL="$SUPABASE_URL" \
+            -PSUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
