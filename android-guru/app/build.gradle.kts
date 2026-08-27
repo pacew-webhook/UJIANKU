@@ -23,7 +23,7 @@ android {
             ?.takeIf { it.isNotEmpty() }
             ?: "sb_publishable_QrLiHQFdpaN0f-D8kW-xqA_1egG73mA"
 
-        buildConfigField("String", "SUPABASE_URL", "\"$supabaseUrl\"")
+        buildConfigField("String", "SUPABASE_URL", "\"https://aaupbsxavpidifmnanbj.supabase.co\"")
         buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"$supabasePublishableKey\"")
     }
 
