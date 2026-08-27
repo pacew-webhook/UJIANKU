@@ -41,3 +41,6 @@ Current fix: `UJIANKU-V1.0-A-FIX3`.
 
 
 Current fix: `UJIANKU-V1.0-A-FIX5` — Supabase URL is fixed in BuildConfig; only publishable key is required as a GitHub Secret.
+
+
+Current fix: `UJIANKU-V1.0-A-FIX6` — GitHub Actions no longer requires `SUPABASE_URL` secret.
