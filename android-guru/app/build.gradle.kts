@@ -8,6 +8,8 @@ android {
     namespace = "com.example.ujianku"
     compileSdk = 36
 
+    buildConfigField("String", "SUPABASE_URL", "\"https://aaupbsxavpidifmnanbj.supabase.co\"")
+    buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"${project.findProperty("SUPABASE_PUBLISHABLE_KEY") ?: ""}\"")
     defaultConfig {
         applicationId = "com.example.ujianku"
         minSdk = 26
@@ -22,9 +24,7 @@ android {
             ?.trim()
             ?.takeIf { it.isNotEmpty() }
             ?: "sb_publishable_QrLiHQFdpaN0f-D8kW-xqA_1egG73mA"
-
-        buildConfigField("String", "SUPABASE_URL", "\"https://aaupbsxavpidifmnanbj.supabase.co\"")
-        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"$supabasePublishableKey\"")
+buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"$supabasePublishableKey\"")
     }
 
     buildFeatures { buildConfig = true }
