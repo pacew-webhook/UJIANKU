@@ -3,6 +3,7 @@ package com.example.ujianku
 import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.ScrollView
