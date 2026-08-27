@@ -2,10 +2,8 @@ package com.example.ujianku
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.Spinner
@@ -63,29 +61,14 @@ class BankSoalActivity : AppCompatActivity() {
         listContainer.removeAllViews()
         emptyText.visibility = if (questions.isEmpty()) View.VISIBLE else View.GONE
         questions.forEachIndexed { index, item ->
-            val box = LinearLayout(this).apply {
-                orientation = LinearLayout.VERTICAL
-                setPadding(0, 18, 0, 18)
-            }
-            val title = TextView(this).apply {
-                text = "${index + 1}. ${item.question}"
-                textSize = 18f
-                setTypeface(null, android.graphics.Typeface.BOLD)
-            }
-            val answer = TextView(this).apply {
-                text = "A. ${item.optionA}\nB. ${item.optionB}\nC. ${item.optionC}\nD. ${item.optionD}\nJawaban: ${item.correctAnswer}"
-                textSize = 15f
-                setPadding(0, 8, 0, 8)
-            }
-            val edit = Button(this).apply { text = "EDIT" }
-            edit.setOnClickListener { showQuestionDialog(item) }
-            val delete = Button(this).apply { text = "HAPUS" }
-            delete.setOnClickListener { confirmDelete(item) }
-            box.addView(title)
-            box.addView(answer)
-            box.addView(edit)
-            box.addView(delete)
-            listContainer.addView(box, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+            val box = layoutInflater.inflate(R.layout.item_soal, listContainer, false)
+            box.findViewById<TextView>(R.id.questionText).text = "${index + 1}. ${item.question}"
+            box.findViewById<TextView>(R.id.optionsText).text =
+                "A. ${item.optionA}\nB. ${item.optionB}\nC. ${item.optionC}\nD. ${item.optionD}"
+            box.findViewById<TextView>(R.id.correctAnswerText).text = "Jawaban: ${item.correctAnswer}"
+            box.findViewById<Button>(R.id.editQuestionButton).setOnClickListener { showQuestionDialog(item) }
+            box.findViewById<Button>(R.id.deleteQuestionButton).setOnClickListener { confirmDelete(item) }
+            listContainer.addView(box)
         }
     }
 
