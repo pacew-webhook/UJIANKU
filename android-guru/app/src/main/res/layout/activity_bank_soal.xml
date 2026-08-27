@@ -7,6 +7,7 @@
         <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bank Soal" android:textSize="26sp" android:textStyle="bold" android:gravity="center_vertical" android:paddingStart="12dp"/>
     </LinearLayout>
     <Button android:id="@+id/addQuestionButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="+ TAMBAH SOAL" android:layout_marginTop="16dp"/>
+    <Button android:id="@+id/importExcelButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="IMPORT EXCEL" android:layout_marginTop="8dp"/>
     <ProgressBar android:id="@+id/questionProgress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:visibility="gone" android:layout_marginTop="12dp"/>
     <TextView android:id="@+id/emptyQuestions" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Belum ada soal." android:gravity="center" android:padding="24dp"/>
     <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
