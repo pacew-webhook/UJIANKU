@@ -2,6 +2,7 @@ package com.example.ujianku.data
 
 import com.example.ujianku.BuildConfig
 import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.createSupabaseClient
 
 object SupabaseClient {
