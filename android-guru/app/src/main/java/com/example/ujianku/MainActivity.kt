@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.ujianku.data.SupabaseClient
@@ -83,6 +84,13 @@ class MainActivity : AppCompatActivity() {
         emailText.text =
             "Login sebagai: ${supabase.auth.currentUserOrNull()?.email ?: "-"}"
 
+        setupDashboardMenu(R.id.menuBankSoal, "Bank Soal")
+        setupDashboardMenu(R.id.menuBuatUjian, "Buat Ujian")
+        setupDashboardMenu(R.id.menuDataSiswa, "Data Siswa")
+        setupDashboardMenu(R.id.menuNilai, "Nilai")
+        setupDashboardMenu(R.id.menuDaftarUjian, "Daftar Ujian")
+        setupDashboardMenu(R.id.menuProfil, "Profil Guru")
+
         logoutButton.setOnClickListener {
             lifecycleScope.launch {
                 try {
@@ -91,6 +99,16 @@ class MainActivity : AppCompatActivity() {
                     showLogin()
                 }
             }
+        }
+    }
+
+    private fun setupDashboardMenu(buttonId: Int, featureName: String) {
+        findViewById<Button>(buttonId).setOnClickListener {
+            Toast.makeText(
+                this,
+                "$featureName akan tersedia pada tahap berikutnya.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
