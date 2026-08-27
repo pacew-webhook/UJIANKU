@@ -4,6 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
+val supabasePublishableKey = providers.gradleProperty("SUPABASE_PUBLISHABLE_KEY").orNull ?: ""
+
 android {
     namespace = "com.example.ujianku"
     compileSdk = 36
@@ -15,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0-A"
         buildConfigField("String", "SUPABASE_URL", "\"https://aaupbsxavpidifmnanbj.supabase.co\"")
-        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"${project.findProperty(\"SUPABASE_PUBLISHABLE_KEY\") ?: \"\"}\"")
+        buildConfigField("String", "SUPABASE_PUBLISHABLE_KEY", "\"$supabasePublishableKey\"")
     }
 
     buildFeatures { buildConfig = true }
