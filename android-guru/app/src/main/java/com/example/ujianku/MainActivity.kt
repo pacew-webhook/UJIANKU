@@ -13,19 +13,6 @@ import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.launch
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 class MainActivity : AppCompatActivity() {
 
@@ -108,59 +95,3 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-
-@Composable
-fun DashboardScreen(
-    email: String = "",
-    onCreateExam: () -> Unit = {},
-    onQuestionBank: () -> Unit = {},
-    onExamList: () -> Unit = {},
-    onLogout: () -> Unit = {}
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Top
-    ) {
-        Text(
-            text = "UJIANKU",
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = "Dashboard Guru",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-
-        if (email.isNotBlank()) {
-            Text(
-                text = "Guru: $email",
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-        }
-
-        DashboardButton("＋ Buat Ujian", onCreateExam)
-        Spacer(modifier = Modifier.height(12.dp))
-        DashboardButton("📚 Bank Soal", onQuestionBank)
-        Spacer(modifier = Modifier.height(12.dp))
-        DashboardButton("📝 Daftar Ujian", onExamList)
-        Spacer(modifier = Modifier.height(12.dp))
-        DashboardButton("🚪 Logout", onLogout)
-    }
-}
-
-@Composable
-private fun DashboardButton(
-    label: String,
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(label)
-    }
-}
